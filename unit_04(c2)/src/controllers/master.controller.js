@@ -9,7 +9,7 @@ router.get("", async (req, res) => {
     try {
         const usrs = await User.find()
         .populate({path:"userId", select:{firstName: 1, lastName: 1, _id: 0}})
-        .populate({path: "savingId", select: {account_number: 1, intrestRate: 1, Id: 0}})
+        .populate({path: "savingId", select: {account_number: 1, _id: 0}})
         .populate({path: "fixedId", select: {_id: 0}})
         .lean().exec();
         return res.status(200).send({ contomer: usrs });
@@ -34,9 +34,9 @@ router.post("", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-        const usrs = await User.find(req.params.id)
-        .populate({path: "userId", select:{firstName: 1, lastName: 1, _id: 0}})
-        .populate({path: "savingId", select: {account_number: 1, intrestRate: 1, Id: 0}})
+        const usrs = await User.findById(req.params.id)
+        .populate({path:"userId", select:{firstName: 1, lastName: 1, _id: 0}})
+        .populate({path: "savingId", select: {account_number: 1,}})
         .populate({path: "fixedId", select: {_id: 0}})
         .lean().exec();
         return res.status(200).send({ contomer: usrs });
