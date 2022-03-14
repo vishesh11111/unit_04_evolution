@@ -8,10 +8,11 @@ const router = express.Router();
 router.get("", async (req, res) => {
     try {
         const usrs = await User.find()
-        .populate({path: "MaterId", select:{_id: 0},
+        .populate({path: "MasterId", select:{_id: 0},
          populate:{path:"userId"},
          populate:{path: "savingId"},
-         populate:{path: "fixedId"}})
+         populate:{path: "fixedId"}
+    })
         .lean().exec();
         return res.status(200).send({ contomer: usrs });
     } catch (error) {
@@ -36,7 +37,7 @@ router.post("", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const usrs = await User.find(req.params.id)
-        .populate({path: "MaterId", select:{_id: 0},
+        .populate({path: "MasterId", select:{_id: 0},
         populate:{path:"userId"},
         populate:{path: "savingId"},
         populate:{path: "fixedId"}})
